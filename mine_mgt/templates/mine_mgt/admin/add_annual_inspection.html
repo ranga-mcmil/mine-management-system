@@ -1,0 +1,65 @@
+{% extends "mine_mgt/base.html" %}
+
+{% block title %}Annual Inspection{% endblock %}
+{% block page %}Add Annual Inspection{% endblock %}
+{% block page2 %}Add Annual Inspection{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header pb-0">
+          <div class="d-flex align-items-center">
+            <p class="mb-0">Add Annual Inspection</p>
+          </div>
+        </div>
+          {% if form.errors %}
+            <p>
+              {{ form.errors }}
+            </p>
+          {% else %}
+          {% endif %}
+          <form action="" method="post">
+                <div class="card-body">
+                  
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Claim</label>
+                        {{ form.claim }}
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Condition</label>
+                        {{ form.condition }}
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Decision</label>
+                        {{ form.desicion }}
+                      </div>
+                    </div>
+
+                    {% csrf_token %}
+                      <div class="d-flex align-items-center pt-3">
+                        <button type="submit" class="btn btn-primary btn-sm ms-auto">Submit</button>
+                      </div>
+                  </div>
+
+                </div>
+              </form>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends "mine_mgt/base.html" %}
+{% block title %}Claim Application{% endblock %}
+{% block page %}Claim Application{% endblock %}
+{% block page2 %}Claim Application{% endblock %}
+
+{% block content %}
+    
+
+
+
+
+
+
+
+
+
+    <!-- ==================================================== -->
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <p class="mb-0">Claim Application -  - <span class="text-info">{{ claim.status }}</span></p>
+              </div>
+            </div>
+              <form action="" method="post">
+                    <div class="card-body">
+                      <p class="text-uppercase text-sm">User Information</p>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Username</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.applicant.username }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Email address</label>
+                            <input class="form-control" disabled type="email" value="{{ claim.applicant.email }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">First name</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.applicant.first_name }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Last name</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.applicant.last_name }}">
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="horizontal dark">
+                      <p class="text-uppercase text-sm">Claim Information</p>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Address</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.address }}">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Location</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.location }}">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Country</label>
+                            <input class="form-control" disabled type="text" value="Zimbabwe">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Size Approximation</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.size_approximation }}">
+                          </div>
+                        </div>
+                        {% if user.profile.document1 and user.profile.document2 and user.profile.document3 %}
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">ID</label>
+                                <a href="{{user.profile.document1.url}}" class="d-block">{% if user.profile.document1 %}{{user.profile.document1}}{% else %}No Document {% endif %}</a>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Licence</label>
+                                <a href="{{user.profile.document2.url}}" class="d-block">{% if user.profile.document2 %}{{user.profile.document1}}{% else %}No Document {% endif %}</a>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Police Clearance</label>
+                                <a href="{{user.profile.document3.url}}" class="d-block">{% if user.profile.document3 %}{{user.profile.document1}}{% else %}No Document {% endif %}</a>
+                              </div>
+                            </div>
+                        {% endif %}
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Monthly Returns</label>
+                            {{ form.monthly_return }}
+                          </div>
+                        </div>
+                          {% csrf_token %}
+                          <div class="d-flex align-items-center pt-3">
+                            <button type="submit" class="btn btn-primary btn-sm ms-auto mx-2">Approve</button>
+                            <a href="{% url 'mine_mgt:declined' claim.id %}" class="btn btn-danger btn-sm ">Reject</a>
+                          </div>
+                      </div>
+    
+                    </div>
+                  </form>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card" style="height: 320px;">
+            <div class="card-header pb-0 p-3">
+              <h6 class="mb-0">Other Applications ({{pending_claims.count}})</h6>
+            </div>
+            <div class="card-body p-3">
+              <ul class="list-group">
+    
+                {% for claim in pending_claims %}
+                      <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                        <div class="d-flex align-items-center">
+                          <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
+                            <i class="ni ni-tag text-white opacity-10"></i>
+                          </div>
+                          <div class="d-flex flex-column">
+                            <h6 class="mb-1 text-dark text-sm">{{ claim.location }}</h6>
+                            <span class="text-xs">{{ claim.address }} <span class="font-weight-bold">15 open</span></span>
+                          </div>
+                        </div>
+                        <div class="d-flex">
+                          <a href="" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></a>
+                        </div>
+                      </li>
+                {% endfor %}
+    
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================================================== -->
+
+{% endblock %}

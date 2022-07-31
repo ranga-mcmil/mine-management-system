@@ -1,0 +1,155 @@
+{% extends "mine_mgt/base.html" %}
+
+{% block title %}Payments{% endblock %}
+{% block page %}Payments{% endblock %}
+{% block page2 %}Payments{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header mx-4 p-3 text-center">
+                      <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                        <i class="fas fa-landmark opacity-10"></i>
+                      </div>
+                    </div>
+                    <div class="card-body pt-0 p-3 text-center">
+                      <h6 class="text-center mb-0">Balance</h6>
+                      <span class="text-xs">Belong Interactive</span>
+                      <hr class="horizontal dark my-3">
+                      <h5 class="mb-0">${{balance}}</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mt-md-0 mt-3">
+                  <div class="card">
+
+                    <div class="card-body pt-0 p-3 pt-4 text-center">
+                      <h6 class="text-center mb-0">Upload</h6>
+                      <span class="text-xs">Proof Of Payment</span>
+                      <hr class="horizontal dark my-3">
+                      <!--<h5 class="mb-0 pb-4"></h5>-->
+                      <form action="" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                          <div class="text-center mr-5">
+                            {{form.as_p}}
+                            {% csrf_token %}
+                          </div>
+                          <div class="">
+                            <input type="hidden" name="next" value='{{ next }}'>
+                            <button type="submit" class="btn btn-primary ">Upload</button>
+                          </div>
+
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-7 mt-4">
+          <div class="card" >
+
+                <div class="card-header pb-0 p-3">
+                  <div class="row">
+                    <div class="col-6 d-flex align-items-center">
+                      <h6 class="mb-0">Invoices ({{ payments.count }})</h6>
+                    </div>
+                    <div class="col-6 text-end">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body p-3 pb-0">
+                  <ul class="list-group">
+
+                    {% for payment in payments %}
+                      <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                        <div class="d-flex flex-column">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm">{{ payment.created  }}</h6>
+                          <span class="text-xs">#MS-415646</span>
+                        </div>
+                        <div class="d-flex align-items-center text-sm">
+                          ${{ payment.amount }}
+                          <a href="{{ payment.proof.image.url }}" class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> Proof</a>
+                        </div>
+                      </li>
+                    {% endfor %}
+
+
+                  </ul>
+                </div>
+
+
+          </div>
+        </div>
+
+        <div class="col-md-5 mt-4">
+          <div class="card h-100 mb-4">
+            <div class="card-header pb-0 px-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6 class="mb-0">Proof of Payments ({{proofs.count}})</h6>
+                </div>
+
+              </div>
+            </div>
+            <div class="card-body pt-4 p-3">
+              <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Newest</h6>
+
+              <ul class="list-group">
+
+                {% for proof in proofs %}
+                    {% if proof.is_processeed %}
+                        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                          <div class="d-flex align-items-center">
+                            <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
+                            <div class="d-flex flex-column">
+                              <span class="text-xs">{{ proof.created|date:"d M, Y" }}, at {{ proof.created|date:"h:i A" }}</span>
+                            </div>
+                          </div>
+                          <div class="d-flex align-items-center text-dark text-sm font-weight-bold">
+                            Processed
+                          </div>
+                        </li>
+
+                    {% else %}
+                        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                          <div class="d-flex align-items-center">
+                            <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-exclamation"></i></button>
+                            <div class="d-flex flex-column">
+                              <span class="text-xs">{{ proof.created|date:"d M, Y" }}, at {{ proof.created|date:"h:i A" }}</span>
+                            </div>
+                          </div>
+                          <div class="d-flex align-items-center text-dark text-sm font-weight-bold">
+                            Pending
+                          </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

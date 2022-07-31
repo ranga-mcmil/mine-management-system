@@ -1,0 +1,179 @@
+{% extends "mine_mgt/base.html" %}
+{% block title %}Claim Detail{% endblock %}
+{% block page %}Claim Detail{% endblock %}
+{% block page2 %}Claim Detail{% endblock %}
+
+{% block content %}
+    <div class="container-fluid py-4">
+        <div class="row mb-4    ">
+        <div class="col-lg-12">
+          <div class="row">
+
+            <div class="col-xl-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header mx-4 p-3 text-center">
+                      <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                        <i class="fas fa-landmark opacity-10"></i>
+                      </div>
+                    </div>
+                    <div class="card-body pt-0 p-3 text-center">
+                      <h6 class="text-center mb-0">Balance</h6>
+                      <span class="text-xs p-4"></span>
+                      <hr class="horizontal dark my-3">
+                      <h5 class="mb-0">${{claim.balance}}</h5>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-xl-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header mx-4 p-3 text-center">
+                      <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                        <i class="fas fa-landmark opacity-10"></i>
+                      </div>
+                    </div>
+                    <div class="card-body pt-0 p-3 text-center">
+                      <h6 class="text-center mb-0">Monthly Labour Returns</h6>
+                      <span class="text-xs p-4"></span>
+                      <hr class="horizontal dark my-3">
+                      <h5 class="mb-0">${{claim.monthly_labour_returns}}</h5>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      
+
+    <!-- =================================================== -->
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <p class="mb-0">Claim -  - 
+                  <span class="text-{% if claim.status == Active %}success{% elif claim.status == forfeited%}danger{% else %}info{%endif%} text-gradient">
+                    {{ claim.status }}
+                  </span>
+                </p>
+              </div>
+            </div>
+              <form action="" method="post">
+                    <div class="card-body">
+                      <p class="text-uppercase text-sm">User Information</p>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Username</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.applicant.username }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Email address</label>
+                            <input class="form-control" disabled type="email" value="{{ claim.applicant.email }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">First name</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.applicant.first_name }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Last name</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.applicant.last_name }}">
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="horizontal dark">
+                      <p class="text-uppercase text-sm">Claim Information</p>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Address</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.address }}">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Location</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.location }}">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Country</label>
+                            <input class="form-control" disabled type="text" value="Zimbabwe">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Size Approximation</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.size_approximation }}">
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Monthly Returns</label>
+                            <input class="form-control" disabled type="text" value="{{ claim.monthly_labour_returns }}">
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Reason for Forfeit</label>
+                            {{ form.reason }}
+                          </div>
+                        </div>
+                          {% csrf_token %}
+
+                          <div class="d-flex align-items-center pt-3">
+                            <input type="submit" class="btn btn-danger btn-sm ms-auto mx-2" value="Forfeit">
+                          </div>
+                      </div>
+    
+                    </div>
+                  </form>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card" style="height: 320px;">
+            <div class="card-header pb-0 p-3">
+              <h6 class="mb-0">Invoices ({{payments.count}})</h6>
+            </div>
+            <div class="card-body p-3">
+              <ul class="list-group">
+    
+                    {% for payment in payments %}
+                      <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                        <div class="d-flex flex-column">
+                          <h6 class="mb-1 text-dark font-weight-bold text-sm">{{ payment.user.get_full_name  }}</h6>
+                          <span class="text-xs">#RCPT{{payment.id}} - {{ payment.created  }}</span>
+                        </div>
+                        <div class="d-flex align-items-center text-sm">
+                          ${{ payment.amount }}
+                          <a href="{{ payment.proof.image.url }}" class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> Proof</a>
+                        </div>
+                      </li>
+                    {% endfor %}
+    
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

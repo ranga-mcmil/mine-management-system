@@ -1,0 +1,103 @@
+{% extends "mine_mgt/base.html" %}
+
+{% block title %}Payments{% endblock %}
+{% block page %}Add Payment{% endblock %}
+{% block page2 %}Add Payment{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header pb-0">
+          <div class="d-flex align-items-center">
+            <p class="mb-0">Add Payment</p>
+          </div>
+        </div>
+          {% if form.errors %}
+            <p>
+              {{ form.errors }}
+            </p>
+          {% else %}
+            <p>Please, use the following form to log-in:</p>
+          {% endif %}
+          <form action="" method="post">
+                <div class="card-body">
+                  <p class="text-uppercase text-sm">User Information</p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Username</label>
+                        <input class="form-control" disabled type="text" value="{{ userr.username }}">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Email address</label>
+                        <input class="form-control" disabled type="email" value="{{ userr.email }}">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">First name</label>
+                        <input class="form-control" disabled type="text" value="{{ userr.first_name }}">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Last name</label>
+                        <input class="form-control" disabled type="text" value="{{ userr.last_name }}">
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="horizontal dark">
+                  <p class="text-uppercase text-sm">Payment Information</p>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Claim</label>
+                        {{ form.claim }}
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Reason</label>
+                        {{ form.reason }}
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Amount</label>
+                        {{ form.amount }}
+                      </div>
+                    </div>
+
+                    {% csrf_token %}
+                      <div class="d-flex align-items-center pt-3">
+                        <button type="submit" class="btn btn-primary btn-sm ms-auto">Submit</button>
+                      </div>
+                  </div>
+
+                </div>
+              </form>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card" style="height: 320px;">
+        <div class="card-header pb-0 p-3">
+          <h6 class="mb-0">Proof</h6>
+        </div>
+        <div class="card-body p-3">
+          <img src="{{ proof.image.url }}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
