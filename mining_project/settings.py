@@ -150,4 +150,3 @@ LOGOUT_URL = 'logout'
 
 AUTH_USER_MODEL = 'accounts.User'
 
-django_heroku.settings(locals())
