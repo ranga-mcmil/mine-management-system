@@ -7,6 +7,7 @@ class User(AbstractUser):
     is_administrator = models.BooleanField(default=False)
     balance = models.CharField(max_length=250)
 
+    
 
 # Create your models here.
 class Profile(models.Model):

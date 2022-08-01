@@ -156,12 +156,11 @@ def accept(request, id):
     claim = get_object_or_404(Claim, id=id)
     if request.method == 'POST':
         form = MonthlyReturnForm(request.POST)
-        if form.is_valid():
-            form.send(product.user.email, url)
-            return redirect('products:product_list')
+        # if form.is_valid():
+        #     form.send(product.user.email, url)
+        #     return redirect('products:product_list')
     else:
         form = MonthlyReturnForm()
-
 
     claim.status = 'active'
     claim.save()

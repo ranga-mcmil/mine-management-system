@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Claim, Proof, Payment, AnnualInspection
+from .models import Claim, Proof, Payment, AnnualInspection, User
+from django.contrib.auth.admin import UserAdmin
+
+
 
 # # Register your models here.
 # @admin.register(Mine)
@@ -25,3 +28,5 @@ class PaymentAdmin(admin.ModelAdmin):
 @admin.register(AnnualInspection)
 class AnnualInspectionAdmin(admin.ModelAdmin):
     list_display = ('claim', 'condition', 'desicion', )
+
+

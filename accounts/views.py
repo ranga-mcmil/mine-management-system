@@ -64,3 +64,36 @@ def upload_profile(request):
          form = ProfileForm()
 
     return render(request, 'accounts/upload_pdf.html', {'form': form})
+
+
+def register_receptionist(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(data=request.POST)
+
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.balance = 0
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.is_administrator = True
+            new_user.save()
+            Profile.objects.create(user=new_user)
+            return redirect('receptionist_saved')
+
+    else:
+        form = UserRegistrationForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'registration/register_receptionist.html', context)
+
+
+def receptionist_saved(request):
+    
+
+    context = {
+        'message': 'Receptionist record saved',
+    }
+
+    return render(request, 'registration/receptionist_saved.html', context)
