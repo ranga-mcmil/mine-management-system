@@ -20,5 +20,7 @@ urlpatterns = [
    path('declined/<int:id>', views.declined, name='declined'),
    path('add_annual_inspection/', views.add_annual_inspection, name='add_annual_inspection'),
    path('annual_inspections/', views.annual_inspections, name='annual_inspections'),
+   path('accept2/<int:id>', views.accept2, name='accept2'),
+   
 
 ]

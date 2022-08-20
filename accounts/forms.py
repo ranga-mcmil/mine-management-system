@@ -62,7 +62,8 @@ class UserRegistrationForm(forms.ModelForm):
         attrs={
             'class': 'form-control',
             'placeholder': 'Password',
-            'name': 'password'
+            'name': 'password',
+            'minlength': "8"
         }
     ))
 
@@ -70,7 +71,8 @@ class UserRegistrationForm(forms.ModelForm):
         attrs={
             'class': 'form-control',
             'placeholder': 'Password',
-            'name': 'password'
+            'name': 'password',
+            'minlength': "8"
         }
     ))
     password2 = forms.CharField(label='Password', widget=forms.PasswordInput(

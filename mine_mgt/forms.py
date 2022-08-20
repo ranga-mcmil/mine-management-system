@@ -15,9 +15,22 @@ CHOICES3 =(
     ("No Forfeit", "No Forfeit"),
 )
 
+
+
 CHOICES4 =(
     ("Monthly Payments Overdue", "Monthly Payments Overdue"),
+    ('Failure To Pay Tax', 'Failure To Pay Tax'),
+    ('Underutilised Land', 'Underutilised Land'),
+    ('Environmental Impact Degradation', 'Environmental Impact Degradation')
+
 )
+
+CHOICES5 =(
+    ("1000 - 3000 [Labour Returns - $100]", "1000 - 3000 [Labour Returns - $100]"),
+    ("3 000 - 6 000 [Labour Returns - $300]", "3 000 - 6 000 [Labour Returns - $300]"),
+    ("6 000 - 10 000 [Labour Returns - $500]", "6 000 - 10 000 [Labour Returns - $500]"),
+)
+
 
 class ProofForm(forms.ModelForm):
 
@@ -41,10 +54,9 @@ class ClaimForm(forms.ModelForm):
         }
     ))
 
-    size_approximation = forms.CharField(widget=forms.TextInput(
+    size_approximation = forms.ChoiceField(choices=CHOICES5, widget=forms.Select(
         attrs={
             'class': 'form-control',
-            'placeholder': '300Ha',
         }
     ))
 
@@ -157,10 +169,21 @@ class ReasonForm(forms.Form):
         }
     ))
 
+    notes = forms.CharField(max_length=120, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+        }
+    ))
+
     def get_info(self):
         # Cleaned data
         cl_data = super().clean()
 
         reason = cl_data.get('reason')
+        notes = cl_data.get('notes')
 
-        return reason
+        data = {
+            'reason': reason,
+            'notes': notes
+        }
+        return data

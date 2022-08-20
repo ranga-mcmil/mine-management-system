@@ -16,9 +16,12 @@
                     <div class="col-10 d-flex align-items-center pb-4">
                       <h6 class="mb-0">Inspections</h6>
                     </div>
-                    <div class="col-2 d-flex align-items-center pb-4">
-                        <a href="{% url 'mine_mgt:add_annual_inspection' %}" class="mb-0 btn btn-secondary">Add New</a>
-                      </div>
+                    {% if not user.is_mine %}
+                        <div class="col-2 d-flex align-items-center pb-4">
+                            <a href="{% url 'mine_mgt:add_annual_inspection' %}" class="mb-0 btn btn-secondary">Add New</a>
+                        </div>
+                    {% endif %}
+                    
 
                 </div>
 

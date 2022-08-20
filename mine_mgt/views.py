@@ -102,7 +102,10 @@ def claim_detail(request, id):
             form = ReasonForm(request.POST)
             if form.is_valid():
                 claim.status = 'forfeit'
-                claim.reason = form.get_info()
+                data = form.get_info()
+                claim.reason = data['reason']
+                claim.notes = data['notes']
+
                 claim.save()
                 return redirect('mine_mgt:dashboard')
         else:
@@ -134,7 +137,13 @@ def claim_application(request, id):
             form = MonthlyReturnForm(request.POST)
             if form.is_valid():
                 claim.balance -= int(form.get_info())
-                claim.monthly_labour_returns = int(form.get_info())
+                
+                if claim.size_approximation == '1000 - 3000 [Labour Returns - $100]':
+                    claim.monthly_labour_returns = 100
+                elif claim.size_approximation == '3 000 - 6 000 [Labour Returns - $300]':
+                    claim.monthly_labour_returns = 300
+                elif claim.size_approximation  == '6 000 - 10 000 [Labour Returns - $500]':
+                    claim.monthly_labour_returns = 500
                 claim.status = 'active'
                 claim.save()
                 return redirect('mine_mgt:dashboard')
@@ -152,7 +161,7 @@ def claim_application(request, id):
         return redirect('mine_mgt:dashboard')
 
 @login_required
-def accept(request, id):
+def accept(request):
     claim = get_object_or_404(Claim, id=id)
     if request.method == 'POST':
         form = MonthlyReturnForm(request.POST)
@@ -165,6 +174,25 @@ def accept(request, id):
     claim.status = 'active'
     claim.save()
     return redirect('mine_mgt:dashboard')
+
+def accept2(request, id):
+    claim = get_object_or_404(Claim, id=id)
+    if claim.size_approximation == '1000 - 3000 [Labour Returns - $100]':
+        claim.monthly_labour_returns = 100
+        claim.balance -= 100
+    elif claim.size_approximation == '3 000 - 6 000 [Labour Returns - $300]':
+        claim.monthly_labour_returns = 300
+        claim.balance -= 300
+    elif claim.size_approximation  == '6 000 - 10 000 [Labour Returns - $500]':
+        claim.monthly_labour_returns = 500
+        claim.balance -= 500
+    claim.status = 'active'
+    claim.save()
+    return redirect('mine_mgt:dashboard')
+
+
+
+
 
 @login_required
 def apply(request):

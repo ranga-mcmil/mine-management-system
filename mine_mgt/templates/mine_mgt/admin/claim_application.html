@@ -55,6 +55,27 @@
                         </div>
                       </div>
                       <hr class="horizontal dark">
+                      {% if claim.applicant.profile.document1 and claim.applicant.profile.document2 and claim.applicant.profile.document3 %}
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">ID</label>
+                                <a href="{{claim.applicant.profile.document1.url}}" class="d-block">{% if claim.applicant.profile.document1 %}{{claim.applicant.profile.document1}}{% else %}No Document {% endif %}</a>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Licence</label>
+                                <a href="{{claim.applicant.profile.document2.url}}" class="d-block">{% if claim.applicant.profile.document2 %}{{claim.applicant.profile.document1}}{% else %}No Document {% endif %}</a>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Police Clearance</label>
+                                <a href="{{claim.applicant.profile.document3.url}}" class="d-block">{% if claim.applicant.profile.document3 %}{{claim.applicant.profile.document1}}{% else %}No Document {% endif %}</a>
+                              </div>
+                            </div>
+                        {% endif %}
+                        <hr class="horizontal dark">
                       <p class="text-uppercase text-sm">Claim Information</p>
                       <div class="row">
                         <div class="col-md-12">
@@ -81,35 +102,11 @@
                             <input class="form-control" disabled type="text" value="{{ claim.size_approximation }}">
                           </div>
                         </div>
-                        {% if user.profile.document1 and user.profile.document2 and user.profile.document3 %}
-                            <div class="col-md-12">
-                              <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">ID</label>
-                                <a href="{{user.profile.document1.url}}" class="d-block">{% if user.profile.document1 %}{{user.profile.document1}}{% else %}No Document {% endif %}</a>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Licence</label>
-                                <a href="{{user.profile.document2.url}}" class="d-block">{% if user.profile.document2 %}{{user.profile.document1}}{% else %}No Document {% endif %}</a>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Police Clearance</label>
-                                <a href="{{user.profile.document3.url}}" class="d-block">{% if user.profile.document3 %}{{user.profile.document1}}{% else %}No Document {% endif %}</a>
-                              </div>
-                            </div>
-                        {% endif %}
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Monthly Returns</label>
-                            {{ form.monthly_return }}
-                          </div>
-                        </div>
+                        
+                        
                           {% csrf_token %}
                           <div class="d-flex align-items-center pt-3">
-                            <button type="submit" class="btn btn-primary btn-sm ms-auto mx-2">Approve</button>
+                            <a href="{% url 'mine_mgt:accept2' claim.id %}" class="btn btn-primary btn-sm ms-auto mx-2">Approve</a>
                             <a href="{% url 'mine_mgt:declined' claim.id %}" class="btn btn-danger btn-sm ">Reject</a>
                           </div>
                       </div>

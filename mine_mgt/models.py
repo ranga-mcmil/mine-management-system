@@ -63,6 +63,7 @@ class Claim(models.Model):
     balance = models.IntegerField(default=0)
     monthly_labour_returns = models.IntegerField(default=0)
     reason = models.CharField(max_length=250, blank=True, null=True)
+    notes = models.CharField(max_length=250, blank=True, null=True)
     created = models.DateTimeField(default=timezone.now)
     objects = models.Manager()  # The default manager.
     forfeited = ForfeitedManager()  # Our custom manager.
